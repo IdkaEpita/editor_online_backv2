@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/sofia-95/editor_online_backv2#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "socket.io": "^2.3.0"
   }
 }
