@@ -13,5 +13,7 @@ server.listen(port, () => {
   app.use(express.static(path.join(__dirname, 'public')));
 
   io.on('connection', (socket) => {
-  
+    socket.on('join', function(document) {
+      socket.join(document);
+    });
   });
