@@ -1,0 +1,22 @@
+{
+  "name": "editor_online_backv2",
+  "version": "1.0.0",
+  "description": "Second version of editor online, language : nodejs express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sofia-95/editor_online_backv2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sofia-95/editor_online_backv2/issues"
+  },
+  "homepage": "https://github.com/sofia-95/editor_online_backv2#readme",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}
