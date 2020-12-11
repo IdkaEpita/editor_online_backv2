@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+//const options = {};
 var port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const Document = require('./model/documents');
@@ -18,9 +18,24 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
 
   // Routing
   app.use(express.static(path.join(__dirname, 'public')));
+  
+  var text = {
+    text: ''
+  };
+
+  const io = require('socket.io')(server);
+  server.listen(port);
+
 
   io.on('connection', (socket) => {
-    socket.on('join', function(document) {
-      socket.join(document);
+    console.log('new connection : ' + socket.id);
+
+    socket.on('SEND_DOCUMENT', (data) => {
+      console.log(data);
+      console.log('message received');
+    });
+
+    socket.on('disconnect', (reason) => {
+      console.log(reason);
     });
   });

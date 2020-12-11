@@ -19,9 +19,10 @@
   "homepage": "https://github.com/sofia-95/editor_online_backv2#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "eiows": "^3.4.1",
     "express": "^4.17.1",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.16",
-    "socket.io": "^2.3.0"
+    "socket.io": "^3.0.4"
   }
 }
