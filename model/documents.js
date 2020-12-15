@@ -13,6 +13,14 @@ const documentSchema = mongoose.Schema({
 	author: {
 		type: String,
 		required: true
+	},
+	created_on: {
+		type: Date,
+		required: true
+	},
+	dinit: {
+		type: Boolean,
+		required: true
 	}
 })
 
