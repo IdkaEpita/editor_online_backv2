@@ -90,7 +90,7 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
         } else {
           var query = Document.find({'dinit': true});
           query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
-            socket.emit('INFO_DOC', {list: documents});
+            io.emit('INFO_DOC', {list: documents});
           });
         }
       })
@@ -107,9 +107,12 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
         dinit: true
       });
       new_doc.save().then( new_doc => {
+        console.log("new_doc before")
         var query = Document.find({'dinit': true});
         query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
-          socket.emit('INFO_DOC', {list: documents});
+          io.emit('INFO_DOC', {list: documents});
+        console.log(documents);
+        console.log("new_doc after");
       })
     });
     })
