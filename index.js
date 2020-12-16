@@ -57,10 +57,13 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
 
     socket.on('hello', (data) => {
       active_users.push(data.username)
-      socket.emit('users', active_users);
+      console.log(active_users);
+      io.emit('users', active_users);
     })
 
     socket.on('bye', (data) => {
+      console.log("received bye")
+      console.log(data);
       var index = active_users.indexOf(data.username);
       if (index) {
         active_users.splice(index, 1);
