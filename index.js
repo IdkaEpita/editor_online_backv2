@@ -69,6 +69,7 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
     })
 
     socket.on('SEND_DOCUMENT', (data) => {
+      console.log("edit doc");
       console.log(data);
       var updated_doc = new Document({
         name: data.name,
@@ -82,20 +83,22 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
     });
 
     socket.on('RM_DOCUMENT', (data) => {
+      console.log("remove doc");
       Document.remove({name: data.name}, function(err, result) {
         if (err) {
           console.err(err);
         } else {
-          res.json(result);
+          var query = Document.find({'dinit': true});
+          query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
+            socket.emit('INFO_DOC', {list: documents});
+          });
         }
-      });
-      var query = Document.find({'dinit': true});
-      query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
-        socket.emit('INFO_DOC', {list: documents});
-    });
+      })
+      
     })
 
     socket.on('NEW_DOCUMENT', (data) => {
+      console.log("new doc");
       var new_doc = new Document({
         name: data.name,
         author: data.user,
