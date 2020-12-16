@@ -82,11 +82,31 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
     });
 
     socket.on('RM_DOCUMENT', (data) => {
-      console.log(data);
+      Document.remove({name: data.name}, function(err, result) {
+        if (err) {
+          console.err(err);
+        } else {
+          res.json(result);
+        }
+      });
+      var query = Document.find({'dinit': true});
+      query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
+        socket.emit('INFO_DOC', {list: documents});
+    });
     })
 
     socket.on('NEW_DOCUMENT', (data) => {
-      console.log(data);
+      var new_doc = new Document({
+        name: data.name,
+        author: data.user,
+        created_on: Date.now(),
+        dinit: true
+      });
+      new_doc.save();
+      var query = Document.find({'dinit': true});
+      query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
+        socket.emit('INFO_DOC', {list: documents});
+    });
     })
 
     socket.on('disconnect', (reason) => {
