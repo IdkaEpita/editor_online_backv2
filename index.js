@@ -30,6 +30,15 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
     });
   });
 
+  app.get('/documenthistory', function(req, res, next) {
+    var doc_name = req.query.name;
+    var query = Document.find({name: doc_name})
+    query.sort({created_on: 'desc'}).lean().exec(function(err, documents){
+      if (err) return res.status(400).json(err);
+      res.json(documents);
+    });
+  });
+
   app.get('/listdocuments', function(req, res, next) {
     var query = Document.find({'dinit': true});
     query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
