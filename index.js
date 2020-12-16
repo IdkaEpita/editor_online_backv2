@@ -100,12 +100,14 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
         name: data.name,
         author: data.user,
         created_on: Date.now(),
+        content: "<p></p>",
         dinit: true
       });
-      new_doc.save();
-      var query = Document.find({'dinit': true});
-      query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
-        socket.emit('INFO_DOC', {list: documents});
+      new_doc.save().then( new_doc => {
+        var query = Document.find({'dinit': true});
+        query.sort({created_on: 'asc'}).lean().exec(function(err, documents){
+          socket.emit('INFO_DOC', {list: documents});
+      })
     });
     })
 
